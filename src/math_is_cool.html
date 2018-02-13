@@ -1,0 +1,164 @@
+<html>
+<head>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+	$(function() {
+		$("#vslider").slider({
+			orientation : "vertical",
+			min : 1,
+			max : 10,
+			value : 1,
+			slide : function(event, ui) {
+				complexity = ui.value;
+			}
+		});
+		$("#hslider").slider({
+			min : 1,
+			max : 10,
+			value : 10,
+			slide : function(event, ui) {
+				t = 20000 / ui.value;
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<script>
+		var i = 1;
+		var t = 1000;
+		var ops = "+-*";
+		var MIN = 1, MAX = 10;
+		var complexity = 1;
+
+		function animate_to(id, value) {
+			value = value.toString().replace("*", "\u00D7")
+			$('#' + id).fadeTo(t / 4, 0, function() {
+				$('#' + id).html(value);
+				$('#' + id).fadeTo(t / 4, 1);
+			});
+		}
+
+		function rand(op, min, max, ignore_complexity) {
+			var complexity_factor;
+			complexity_factor = op != '*' ? complexity : Math.floor(Math
+					.sqrt(complexity));
+			min = min == null ? MIN : min;
+			max = max == null ? MAX : max;
+			if (!ignore_complexity) {
+				max = max * complexity_factor;
+				min = (min + 1) * complexity_factor;
+			}
+			return Math.floor((Math.random() * (max + 1)) + min)
+		}
+
+		function ask() {
+			var op_index = rand('', 0, 2, true);
+			var op = ops[op_index];
+			var i = rand(op);
+			var j = rand(op);
+			if (!op)
+				alert(op_index);
+			if (op == '-' && i < j)
+				[ j, i ] = [ i, j ];
+			q = '' + i + op + j;
+			animate_to('a', '???');
+			animate_to('q', q);
+			setTimeout(answer, t);
+		}
+
+		function answer() {
+			animate_to('a', eval(q));
+			setTimeout(ask, t / 2);
+		}
+		function run() {
+			setTimeout(ask, 3);
+
+		}
+		$(document).ready(function() {
+			setTimeout(run, t);
+
+		});
+	</script>
+
+	<style>
+body {
+	background: black;
+	color: white;
+	margin-top: 20px;
+}
+
+div.x {
+	width: 400px;
+	background: brown;
+	text-align: center;
+	margin-left: 50px;
+	border: 2px solid black;
+	margin-bottom: 20px;
+}
+
+div.x p {
+	font-face: Verdana;
+	font-size: 72px;
+	letter-spacing: 5px;
+}
+
+.rotate {
+	-moz-transform: rotate(90deg); /* FF3.5+ */
+	-o-transform: rotate(90deg); /* Opera 10.5 */
+	-webkit-transform: rotate(90deg); /* Saf3.1+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+	/* IE6,IE7 */
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+	/* IE8 */
+}
+
+.mrotate {
+	-moz-transform: rotate(-90deg); /* FF3.5+ */
+	-o-transform: rotate(-90deg); /* Opera 10.5 */
+	-webkit-transform: rotate(-90deg); /* Saf3.1+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+	/* IE6,IE7 */
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+	/* IE8 */
+}
+
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 1em !important;
+	height: 1em !important;
+	cursor: default;
+}
+</style>
+
+	<div class="rotate"
+		style="float: left; margin-left: -50px; margin-top: 150px;">
+		<p style="font-size: 72px">Math is Cool</p>
+	</div>
+
+	<div style="float: left">
+		<div class="x">
+			<p id="q">Question</p>
+		</div>
+
+		<div class="x">
+			<p id="a">Answer</p>
+		</div>
+		<div id="hslider"
+			style="background: blue; height: 0.4em; width: 250px; margin-left: 150px; margin-top: 40px;"></div>
+	</div>
+	<div id="vslider"
+		style="background: green; height: 250px; margin-left: 50px; margin-top: 100px; float: left; width: 0.5em;"></div>
+	<div class="mrotate"
+		style="float: right; margin-top: 100px; margin-right: -50px;">
+		<p style="font-size: 72px">Reken Uit!</p>
+	</div>
+
+</body>
+</html>
