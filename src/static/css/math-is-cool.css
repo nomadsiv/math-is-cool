@@ -1,0 +1,79 @@
+body {
+/*	background: black; */
+/*	color: white; */
+	margin-top: 20px;
+}
+
+div.x {
+	width: 400px;
+	background: brown;
+	color: white;
+	text-align: center;
+	margin-left: 50px;
+	border: 2px solid black;
+	margin-bottom: 20px;
+}
+
+div.x p {
+	font-face: Verdana;
+	font-size: 72px;
+	letter-spacing: 5px;
+}
+
+.rotate {
+	-moz-transform: rotate(90deg); /* FF3.5+ */
+	-o-transform: rotate(90deg); /* Opera 10.5 */
+	-webkit-transform: rotate(90deg); /* Saf3.1+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+	/* IE6,IE7 */
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+	/* IE8 */
+}
+
+.mrotate {
+	-moz-transform: rotate(-90deg); /* FF3.5+ */
+	-o-transform: rotate(-90deg); /* Opera 10.5 */
+	-webkit-transform: rotate(-90deg); /* Saf3.1+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+	/* IE6,IE7 */
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+	/* IE8 */
+}
+
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 1em !important;
+	height: 1em !important;
+	cursor: default;
+}
+
+.v-slider {
+    background: green;
+    height: 250px;
+    margin-left: 50px;
+    margin-top: 100px;
+    float: left;
+    width: 0.5em;
+}
+
+.h-slider {
+    background: blue;
+    height: 0.4em;
+    width: 250px;
+    margin-left: 150px;
+    margin-top: 40px;
+}
+
+.rotated-header {
+    float: left;
+	color: brown;
+    margin-left: -50px;
+    margin-top: 150px;
+}
+
+.title {
+    font-size: 72px;
+}

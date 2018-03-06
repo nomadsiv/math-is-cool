@@ -1,164 +1,92 @@
 <html>
-<head>
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$("#vslider").slider({
-			orientation : "vertical",
-			min : 1,
-			max : 10,
-			value : 1,
-			slide : function(event, ui) {
-				complexity = ui.value;
-			}
-		});
-		$("#hslider").slider({
-			min : 1,
-			max : 10,
-			value : 10,
-			slide : function(event, ui) {
-				t = 20000 / ui.value;
-			}
-		});
-	});
-</script>
-</head>
-<body>
-	<script>
-		var i = 1;
-		var t = 1000;
-		var ops = "+-*";
-		var MIN = 1, MAX = 10;
-		var complexity = 1;
+	<head>
+		<link rel="icon" href="static/icons/math-is-cool.png">
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+					integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+		<link rel="stylesheet" href="static/css/math-is-cool.css">
+		<link rel="stylesheet" href="static/css/speech-to-text.css">
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script type="text/javascript" src="static/scripts/math-is-cool.js"></script>
+		<script type="text/javascript" src="static/scripts/speech-to-text.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<div class="pure-g">
+			<div class="pure-u-1-2">
+				<div class="rotate rotated-header">
+					<p class="title">Math is Cool</p>
+				</div>
 
-		function animate_to(id, value) {
-			value = value.toString().replace("*", "\u00D7")
-			$('#' + id).fadeTo(t / 4, 0, function() {
-				$('#' + id).html(value);
-				$('#' + id).fadeTo(t / 4, 1);
-			});
-		}
+				<div style="float: left">
+					<div class="x">
+						<p id="q">Question</p>
+					</div>
 
-		function rand(op, min, max, ignore_complexity) {
-			var complexity_factor;
-			complexity_factor = op != '*' ? complexity : Math.floor(Math
-					.sqrt(complexity));
-			min = min == null ? MIN : min;
-			max = max == null ? MAX : max;
-			if (!ignore_complexity) {
-				max = max * complexity_factor;
-				min = (min + 1) * complexity_factor;
-			}
-			return Math.floor((Math.random() * (max + 1)) + min)
-		}
-
-		function ask() {
-			var op_index = rand('', 0, 2, true);
-			var op = ops[op_index];
-			var i = rand(op);
-			var j = rand(op);
-			if (!op)
-				alert(op_index);
-			if (op == '-' && i < j)
-				[ j, i ] = [ i, j ];
-			q = '' + i + op + j;
-			animate_to('a', '???');
-			animate_to('q', q);
-			setTimeout(answer, t);
-		}
-
-		function answer() {
-			animate_to('a', eval(q));
-			setTimeout(ask, t / 2);
-		}
-		function run() {
-			setTimeout(ask, 3);
-
-		}
-		$(document).ready(function() {
-			setTimeout(run, t);
-
-		});
-	</script>
-
-	<style>
-body {
-	background: black;
-	color: white;
-	margin-top: 20px;
-}
-
-div.x {
-	width: 400px;
-	background: brown;
-	text-align: center;
-	margin-left: 50px;
-	border: 2px solid black;
-	margin-bottom: 20px;
-}
-
-div.x p {
-	font-face: Verdana;
-	font-size: 72px;
-	letter-spacing: 5px;
-}
-
-.rotate {
-	-moz-transform: rotate(90deg); /* FF3.5+ */
-	-o-transform: rotate(90deg); /* Opera 10.5 */
-	-webkit-transform: rotate(90deg); /* Saf3.1+, Chrome */
-	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
-	/* IE6,IE7 */
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
-	/* IE8 */
-}
-
-.mrotate {
-	-moz-transform: rotate(-90deg); /* FF3.5+ */
-	-o-transform: rotate(-90deg); /* Opera 10.5 */
-	-webkit-transform: rotate(-90deg); /* Saf3.1+, Chrome */
-	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
-	/* IE6,IE7 */
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
-	/* IE8 */
-}
-
-.ui-slider .ui-slider-handle {
-	position: absolute;
-	z-index: 2;
-	width: 1em !important;
-	height: 1em !important;
-	cursor: default;
-}
-</style>
-
-	<div class="rotate"
-		style="float: left; margin-left: -50px; margin-top: 150px;">
-		<p style="font-size: 72px">Math is Cool</p>
-	</div>
-
-	<div style="float: left">
-		<div class="x">
-			<p id="q">Question</p>
+					<div class="x">
+						<p id="a">Answer</p>
+					</div>
+					<div id="hslider" class="h-slider"></div>
+				</div>
+				<div id="vslider" class="v-slider"></div>
+			</div>
+			<div class="pure-u-1-2">
+	      <div class="compact marquee-stacked" id="marquee">
+					<div class="marquee-copy">
+						<h1>
+							<a class="c1" href="http://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html">Web
+							Speech API</a> Demonstration
+						</h1>
+					</div>
+      	</div>
+				<div class="compact marquee">
+					<div id="info">
+						<p id="info_start">
+							Click on the microphone icon and begin speaking for as long as you like.
+						</p>
+						<p id="info_speak_now" style="display:none">
+							Speak now.
+						</p>
+						<p id="info_no_speech" style="display:none">
+							No speech was detected. You may need to adjust your <a href=
+							"//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone
+							settings</a>.
+						</p>
+						<p id="info_no_microphone" style="display:none">
+							No microphone was found. Ensure that a microphone is installed and that
+							<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+							microphone settings</a> are configured correctly.
+						</p>
+						<p id="info_allow" style="display:none">
+							Click the "Allow" button above to enable your microphone.
+						</p>
+						<p id="info_denied" style="display:none">
+							Permission to use microphone was denied.
+						</p>
+						<p id="info_blocked" style="display:none">
+							Permission to use microphone is blocked. To change, go to
+							chrome://settings/contentExceptions#media-stream
+						</p>
+						<p id="info_upgrade" style="display:none">
+							Web Speech API is not supported by this browser. Upgrade to <a href=
+							"//www.google.com/chrome">Chrome</a> version 25 or later.
+						</p>
+					</div>
+					<div id="div_start">
+						<button id="start_button" onclick="startButton(event)"><img alt="Start" id="start_img"
+						src="static/images/mic.gif"></button>
+					</div>
+					<div id="results">
+						<span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span>
+					</div>
+					<div class="compact marquee">
+						<select id="select_language" onchange="updateCountry()"></select>
+						&nbsp;&nbsp; <select id="select_dialect"></select>
+					</div>
+       </div>
+			</div>
 		</div>
-
-		<div class="x">
-			<p id="a">Answer</p>
-		</div>
-		<div id="hslider"
-			style="background: blue; height: 0.4em; width: 250px; margin-left: 150px; margin-top: 40px;"></div>
-	</div>
-	<div id="vslider"
-		style="background: green; height: 250px; margin-left: 50px; margin-top: 100px; float: left; width: 0.5em;"></div>
-	<div class="mrotate"
-		style="float: right; margin-top: 100px; margin-right: -50px;">
-		<p style="font-size: 72px">Reken Uit!</p>
-	</div>
 
 </body>
 </html>
