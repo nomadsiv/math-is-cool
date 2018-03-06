@@ -1,0 +1,43 @@
+*.pyc
+*.swp
+dist
+build
+
+# test stuff
+nosetests.xml
+coverage.xml
+.coverage
+
+# translations
+*.mo
+
+.project
+.pydevproject
+.settings
+nbproject
+tags
+Makefile
+.idea
+*.log
+*.pem
+venv
+venvs
+.venv
+.venvs
+
+# webassets
+.webassets-cache
+.webassets-manifest
+
+# generated files
+gen/
+metrics/out
+cov_html
+qtest/cov_html
+
+.DS_Store
+
+*.manifest.json
+
+test-cover
+
